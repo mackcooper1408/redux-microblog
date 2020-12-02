@@ -7,6 +7,10 @@
     align-items: center;
 }
 
+small {
+    font-size: 0.6rem;
+}
+
 .Navbar-list {
     display: flex;
     flex-direction: row;

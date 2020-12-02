@@ -1,13 +1,10 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import "./Home.css";
+import PostList from "./PostList";
 
-function Home() {
-  const initialPosts = [
-    { id: 123, title: "cool stuff", description: "this is cool" },
-    { id: 1243, title: "cool stuff", description: "this is cool" }]
+function Home({ initialPosts }) {
   const [posts, setPosts] = useState(initialPosts);
-  // const postCards = Object.keys(posts).map(id => (
 
   return (
     <div className="container">
@@ -21,19 +18,7 @@ function Home() {
       </div>
       <div className="container mt-4">
         <p>Welcome to <b>Microblog</b>, our innovation site for ocmmunicating on the information superhighway.</p>
-        {posts.map(post => (
-          <div className="col-12 mb-2" key={post.id}>
-            <div className="card">
-              <div className="card-body">
-                <h2 className="card-title text-center">
-                  <Link to={`/${post.id}`}>{post.title}</Link>
-                </h2>
-                <p>{post.description}</p>
-              </div>
-            </div>
-          </div>
-        ))}
-
+        <PostList posts={posts}/>
       </div>
 
     </div>

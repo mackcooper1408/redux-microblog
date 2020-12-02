@@ -5,8 +5,8 @@ import "./Navbar.css";
 function Navbar() {
   return (
     <nav className="Navbar navbar bg-light">
-      <div className="Navbar-left">
-        <Link className="navbar-brand" to="/">Micro-Blog</Link>
+      <div className="Navbar-left navbar-brand">
+        <Link className="" to="/">Micro-Blog</Link>
         <small>Blog Blog Blog</small>
       </div>
       <ul className="Navbar-list navbar-nav">
