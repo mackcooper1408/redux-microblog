@@ -11,7 +11,7 @@ function PostList({ posts }) {
               <h2 className="card-title text-center">
                 <Link to={`/${post.id}`}>{post.title}</Link>
               </h2>
-              <p>{post.description}</p>
+              <p><small><i>{post.description}</i></small></p>
             </div>
           </div>
         </div>

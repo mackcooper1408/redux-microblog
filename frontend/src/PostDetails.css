@@ -1,5 +1,8 @@
-/* .PostDetails {
-    display: flex;
-    flex-direction: column;
+.PostDetails-comment i {
+    /* display: flex;
+    flex-direction: row;
     align-items: center;
-} */
+    justify-content: space-between; */
+    float: left;
+    cursor: pointer;
+}

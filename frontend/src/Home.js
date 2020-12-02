@@ -11,7 +11,7 @@ function Home({ initialPosts }) {
       <h1>Microblog</h1>
       <h3>Get in the Rithm of blogging</h3>
       <div className="Home-link mx-1">
-        <Link to="/blog">Blog</Link>
+        <Link to="/">Blog</Link>
       </div>
       <div className="Home-link mx-1">
         <Link to="/new">Add a new post</Link>
