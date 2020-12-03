@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const BASE_URL = process.env.BASE_URL || "http://localhost:5000/api"
+const BASE_URL = process.env.BASE_URL || "http://localhost:5000/api";
 
 class microBlogApi {
   static async getAllPosts() {
@@ -42,15 +42,24 @@ class microBlogApi {
 
     return result.data;
   }
+
   static async addNewComments(postId, commentDetails) {
     const result = await axios.post(`${BASE_URL}/posts/${postId}/comments`, commentDetails);
     console.debug(`API POST ${BASE_URL}/posts/${postId}/comments`);
 
     return result.data;
   }
+
   static async deleteComment(postId, commentId) {
     const result = await axios.delete(`${BASE_URL}/posts/${postId}/comments/${commentId}`);
     console.debug(`API DELETE ${BASE_URL}/posts/${postId}/comments/${commentId}`);
+
+    return result.data;
+  }
+
+  static async updateVote(postId, vote){
+    const result = await axios.post(`${BASE_URL}/posts/${postId}/vote/${vote}`);
+    console.debug(`API POST ${BASE_URL}/posts/${postId}/votes/${vote}`);
 
     return result.data;
   }

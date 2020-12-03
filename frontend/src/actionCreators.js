@@ -6,7 +6,8 @@ import {
   LOAD_TITLES,
   LOAD_COMMENTS,
   LOAD_SINGLE_POST,
-  UPDATE_POST
+  UPDATE_POST,
+  UPDATE_VOTE
 } from "./actionTypes";
 import microBlogApi from "./api";
 
@@ -100,6 +101,18 @@ export function deleteCommentWithApi(postId, commentId) {
     }
   }
 }
+
+export function updateVoteWithApi(postId, vote) {
+  return async function (dispatch) {
+    try {
+      const res = await microBlogApi.updateVote(postId, vote);
+      dispatch(updatePostVote(postId, res.votes));
+    } catch (err) {
+      alert(err);
+    }
+  }
+}
+
 /************************************************************** */
 
 function gotTitles(posts) {
@@ -154,5 +167,13 @@ function deleteComment(postId, commentId) {
     type: DELETE_COMMENT,
     postId,
     commentId
+  }
+}
+
+function updatePostVote(id, vote) {
+  return {
+    type: UPDATE_VOTE,
+    id,
+    vote
   }
 }

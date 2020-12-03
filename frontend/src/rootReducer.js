@@ -6,7 +6,8 @@ import {
   DELETE_POST,
   LOAD_COMMENTS,
   ADD_COMMENT,
-  DELETE_COMMENT
+  DELETE_COMMENT,
+  UPDATE_VOTE
 } from "./actionTypes"
 
 const INITIAL_STATE = {
@@ -21,7 +22,7 @@ function rootReducer(state = INITIAL_STATE, action) {
     case LOAD_TITLES:
       return {
         ...state,
-        titles: action.posts
+        titles: action.posts,
       }
 
     case LOAD_SINGLE_POST:
@@ -85,6 +86,19 @@ function rootReducer(state = INITIAL_STATE, action) {
           [action.postId]: newComments
         }
       };
+
+    case UPDATE_VOTE:
+      console.log("IM HERE", action.vote);
+      newTitles = state.titles
+        .map(title => title.id === +action.id ? { ...title, votes: action.vote } : title);
+      return {
+        ...state,
+        posts: {
+          ...state.posts,
+          [action.id]: { ...state.posts[action.id], votes: action.vote }
+        },
+        titles: newTitles
+      }
 
     default:
       return state;

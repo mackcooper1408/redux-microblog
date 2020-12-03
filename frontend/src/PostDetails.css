@@ -6,3 +6,9 @@
     float: left;
     cursor: pointer;
 } 
+
+.PostDetails-votes {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+}

@@ -7,3 +7,5 @@ export const DELETE_POST = "DELETE_POST";
 export const LOAD_COMMENTS = "LOAD_COMMENTS";
 export const ADD_COMMENT = "ADD_COMMENT";
 export const DELETE_COMMENT = "DELETE_COMMENT";
+
+export const UPDATE_VOTE = "UPDATE_VOTE";

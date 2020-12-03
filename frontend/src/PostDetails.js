@@ -5,6 +5,7 @@ import CommentForm from "./CommentForm";
 import "./PostDetails.css";
 import PostEditForm from "./PostEditForm";
 import { getSinglePostFromApi, deletePostWithApi, getCommentsFromAPI, addCommentWithApi, deleteCommentWithApi } from "./actionCreators";
+import PostVotes from "./PostVotes";
 
 function PostDetails() {
   // setting react component state
@@ -20,7 +21,8 @@ function PostDetails() {
   const comments = useSelector(store => store.comments[postId]);
 
   useEffect(() => {
-    if (!post) dispatch(getSinglePostFromApi(postId));
+    // if (!post || post.id) dispatch(getSinglePostFromApi(postId));
+    dispatch(getSinglePostFromApi(postId));
     if (!comments) dispatch(getCommentsFromAPI(postId));
   }, [dispatch]);
 
@@ -59,7 +61,7 @@ function PostDetails() {
           <PostEditForm post={post} postId={postId} />
         </div> :
         <div>
-          <div className="border border-primary rounded py-2">
+          <div className="card-body border border-primary rounded py-2">
             <h1>{post.title}</h1>
             <p><small><i>{post.description}</i></small></p>
             <p>{post.body}</p>
@@ -69,6 +71,9 @@ function PostDetails() {
             <button
               className="btn btn-danger btn-sm mx-1"
               onClick={handlePostDelete}>delete</button>
+            <div className="PostDetails-votes card-footer mt-2">
+              <PostVotes post={post} />
+            </div>
           </div>
           <hr />
           <p>Comments:</p>
