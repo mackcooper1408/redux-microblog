@@ -1,4 +1,13 @@
-import { ADD_POST, DELETE_POST, ADD_COMMENT, DELETE_COMMENT, LOAD_TITLES, LOAD_COMMENTS, LOAD_SINGLE_POST } from "./actionTypes";
+import {
+  ADD_POST,
+  DELETE_POST,
+  ADD_COMMENT,
+  DELETE_COMMENT,
+  LOAD_TITLES,
+  LOAD_COMMENTS,
+  LOAD_SINGLE_POST,
+  UPDATE_POST
+} from "./actionTypes";
 import microBlogApi from "./api";
 
 export function getPostsFromAPI() {
@@ -25,36 +34,83 @@ export function getSinglePostFromApi(postId) {
   }
 }
 
-export function getCommentsFromAPI() {
+export function addPostWithApi(postId, postDetails) {
+  return async function (dispatch) {
+    try {
+      const res = await microBlogApi.addPost(postDetails);
+      dispatch(addPost(postId, res));
+    } catch (err) {
+      alert(err);
+    }
+  }
+}
+
+export function updatePostWithApi(postId, postDetails) {
+  return async function (dispatch) {
+    try {
+      const res = await microBlogApi.updatePost(postId, postDetails);
+      dispatch(updatePost(postId, res));
+    } catch (err) {
+      alert(err);
+    }
+  }
+}
+
+export function deletePostWithApi(postId) {
+  return async function (dispatch) {
+    try {
+      await microBlogApi.deletePost(postId);
+      dispatch(deletePost(postId));
+    } catch (err) {
+      alert(err);
+    }
+  }
+}
+
+export function getCommentsFromAPI(postId) {
   return async function (dispatch) {
     // dispatch(startLoad());
     try {
-      let res = await microBlogApi.getAllComments();
-      dispatch(gotComments(res));
+      const res = await microBlogApi.getAllComments(postId);
+      dispatch(gotComments(postId, res));
     }
     catch (err) {
       alert(err);
     }
   }
 }
+
+export function addCommentWithApi(postId, commentDetails) {
+  return async function (dispatch) {
+    try {
+      const res = await microBlogApi.addNewComments(postId, commentDetails);
+      dispatch(addComment(postId, res));
+    } catch (err) {
+      alert(err);
+    }
+  }
+}
+export function deleteCommentWithApi(postId, commentId) {
+  return async function (dispatch) {
+    try {
+      await microBlogApi.deleteComment(postId, commentId);
+      dispatch(deleteComment(postId, commentId));
+    } catch (err) {
+      alert(err);
+    }
+  }
+}
 /************************************************************** */
 
-function gotTitles(posts){
-  return {type: LOAD_TITLES, posts};
+function gotTitles(posts) {
+  return { type: LOAD_TITLES, posts };
 }
 
 function gotAPost(post) {
-  return {type: LOAD_SINGLE_POST, post}
+  return { type: LOAD_SINGLE_POST, post }
 }
 
-export function deletePost(id) {
-  return {
-    type: DELETE_POST,
-    id
-  }
-}
-
-export function addPost(id, postDetails) {
+function addPost(id, postDetails) {
   return {
     type: ADD_POST,
     id,
@@ -62,24 +118,41 @@ export function addPost(id, postDetails) {
   }
 }
 
-/************************************************************** */
+function updatePost(id, postDetails) {
+  return {
+    type: UPDATE_POST,
+    id,
+    postDetails
+  }
+}
 
-function gotComments(comments) {
-  return { type: LOAD_COMMENTS, comments };
+function deletePost(id) {
+  return {
+    type: DELETE_POST,
+    id
+  }
 }
 
 
-export function addComment(id, comment) {
+/************************************************************** */
+
+function gotComments(id, comments) {
+  return { type: LOAD_COMMENTS, id, comments };
+}
+
+
+function addComment(id, comment) {
   return {
     type: ADD_COMMENT,
     id,
     comment
   }
 }
-export function deleteComment(id, comment) {
+
+function deleteComment(postId, commentId) {
   return {
     type: DELETE_COMMENT,
-    id,
-    comment
+    postId,
+    commentId
   }
 }

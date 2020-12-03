@@ -1,30 +1,32 @@
 import React, { useState } from "react";
 import { useDispatch } from "react-redux";
 import { useHistory } from "react-router-dom";
-import { addPost } from "./actionCreators";
+import { addPostWithApi, updatePostWithApi } from "./actionCreators";
 import { v4 as uuid } from 'uuid';
 
 function PostEditForm({ post, postId }) {
   const DEFAULT_FORM = post || {
     title: "",
     description: "",
-    body: "",
-    comments: []
+    body: ""
   };
   const [form, setForm] = useState(DEFAULT_FORM);
   const history = useHistory();
 
   const dispatch = useDispatch();
 
-  /** dispatch form data to redux.
+  /** dispatch form data to redux & api.
    * use postId if editing existing post, otherwise use uuid()
    */
   function handleSubmit(evt) {
     evt.preventDefault();
 
-    const id = postId || uuid();
-
-    dispatch(addPost(id, form));
+    if (postId) {
+      dispatch(updatePostWithApi(postId, form))
+    } else {
+      const id = uuid();
+      dispatch(addPostWithApi(id, form));
+    }
     history.push("/");
   }
 

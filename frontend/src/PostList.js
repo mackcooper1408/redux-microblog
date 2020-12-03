@@ -7,9 +7,12 @@ function PostList() {
   const posts = useSelector(store => store.titles);
 
   const dispatch = useDispatch();
-
+  
+  // if we don't have posts populating the store, we run the useEffect
+  // and make an api call to fill the titles.  Once its been filled, we use
+  // the store to keep it updated and no longer need to keep making api calls.
   useEffect(() => {
-    dispatch(getPostsFromAPI());
+    if (posts.length === 0) dispatch(getPostsFromAPI());
   }, [dispatch]);
 
   return (

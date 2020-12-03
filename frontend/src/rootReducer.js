@@ -1,11 +1,22 @@
-import { ADD_POST, DELETE_POST, ADD_COMMENT, DELETE_COMMENT, LOAD_TITLES, LOAD_SINGLE_POST } from "./actionTypes"
+import {
+  LOAD_TITLES,
+  LOAD_SINGLE_POST,
+  ADD_POST,
+  UPDATE_POST,
+  DELETE_POST,
+  LOAD_COMMENTS,
+  ADD_COMMENT,
+  DELETE_COMMENT
+} from "./actionTypes"
 
 const INITIAL_STATE = {
   posts: {},
-  titles: []
+  titles: [],
+  comments: {}
 };
 
 function rootReducer(state = INITIAL_STATE, action) {
+  let newTitles;
   switch (action.type) {
     case LOAD_TITLES:
       return {
@@ -14,9 +25,9 @@ function rootReducer(state = INITIAL_STATE, action) {
       }
 
     case LOAD_SINGLE_POST:
-      return{
+      return {
         ...state,
-        posts: {...state.posts, [action.post.id]: action.post}
+        posts: { ...state.posts, [action.post.id]: action.post }
       }
 
     case ADD_POST:
@@ -29,37 +40,49 @@ function rootReducer(state = INITIAL_STATE, action) {
         titles: [...state.titles, action.postDetails]
       };
 
+    case UPDATE_POST:
+      newTitles = state.titles
+        .map(title => title.id === +action.id ? action.postDetails : title);
+      return {
+        ...state,
+        posts: {
+          ...state.posts,
+          [action.id]: action.postDetails
+        },
+        titles: newTitles
+      }
+
     case DELETE_POST:
       const postsListCopy = { ...state.posts };
       delete postsListCopy[action.id];
 
-      const newTitles = state.titles.filter(title => title.id !== action.id);
+      newTitles = state.titles.filter(title => title.id !== +action.id);
       return { ...state, posts: postsListCopy, titles: newTitles };
+
+    case LOAD_COMMENTS:
+      return {
+        ...state,
+        comments: { ...state.comments, [action.id]: action.comments }
+      };
 
     case ADD_COMMENT:
       return {
         ...state,
-        posts: {
-          ...state.posts,
-          [action.id]: {
-            ...state.posts[action.id],
-            comments: [...state.posts[action.id].comments, action.comment]
-          }
+        comments: {
+          ...state.comments,
+          [action.id]: [...state.comments[action.id], action.comment]
         }
       };
 
     case DELETE_COMMENT:
-      const newComments = state.posts[action.id].comments
-        .filter(c => c !== action.comment);
+      const newComments = state.comments[action.postId]
+        .filter(c => c.id !== +action.commentId);
 
       return {
         ...state,
-        posts: {
-          ...state.posts,
-          [action.id]: {
-            ...state.posts[action.id],
-            comments: newComments
-          }
+        comments: {
+          ...state.comments,
+          [action.postId]: newComments
         }
       };
 

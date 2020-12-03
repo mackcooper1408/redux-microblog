@@ -4,7 +4,7 @@ import { useHistory, useParams } from "react-router-dom";
 import CommentForm from "./CommentForm";
 import "./PostDetails.css";
 import PostEditForm from "./PostEditForm";
-import { deletePost, addComment, deleteComment, getSinglePostFromApi } from "./actionCreators";
+import { getSinglePostFromApi, deletePostWithApi, getCommentsFromAPI, addCommentWithApi, deleteCommentWithApi } from "./actionCreators";
 
 function PostDetails() {
   // setting react component state
@@ -17,15 +17,17 @@ function PostDetails() {
 
   // grabbing state from redux
   const post = useSelector(store => store.posts[postId]);
+  const comments = useSelector(store => store.comments[postId]);
 
   useEffect(() => {
-    dispatch(getSinglePostFromApi(postId));
+    if (!post) dispatch(getSinglePostFromApi(postId));
+    if (!comments) dispatch(getCommentsFromAPI(postId));
   }, [dispatch]);
 
   /** uses singleKey and deletes the post
    * from the posts object in the store with redux */
   function handlePostDelete() {
-    dispatch(deletePost(postId));
+    dispatch(deletePostWithApi(postId));
     history.push("/");
   }
 
@@ -35,17 +37,19 @@ function PostDetails() {
    *    new comment to add for specific post
    */
   function handleAddComment(comment) {
-    dispatch(addComment(postId, comment));
+    dispatch(addCommentWithApi(postId, comment));
   }
 
   /** grabs the parentNode of the clicked icon
    * and removes the comment from the comment state. */
   function handleDeleteComment(evt) {
-    const deletedComment = evt.target.parentNode.innerText;
-    dispatch(deleteComment(postId, deletedComment));
+    //need to find the comment ID from here
+    console.log(evt.target.getAttribute("id"));
+    const deletedId = evt.target.getAttribute("id");
+    dispatch(deleteCommentWithApi(postId, deletedId));
   }
 
-  if (!post) return <div>LOADING</div>;
+  if (!post || !comments) return <div>LOADING</div>;
 
   return (
     <div className="PostDetails col-8 mt-2">
@@ -67,20 +71,19 @@ function PostDetails() {
               onClick={handlePostDelete}>delete</button>
           </div>
           <hr />
-          {/* <p>Comments:</p>
+          <p>Comments:</p>
           <ul className="list-group my-2">
-            {post.comments.map((c, i) => (
-              <li className="PostDetails-comment list-group-item" key={i}>
-                <i className="fas fa-trash-alt" onClick={handleDeleteComment}></i>
-                {c}
+            {comments.map(c => (
+              <li className="PostDetails-comment list-group-item" key={c.id} >
+                <i className="fas fa-trash-alt" onClick={handleDeleteComment} id={c.id}></i>
+                {c.text}
               </li>
             ))}
           </ul>
-          <CommentForm addComment={handleAddComment} /> */}
+          <CommentForm addComment={handleAddComment} />
         </div>
       }
     </div>
-    // <div>HELLO</div>
   )
 }
 
