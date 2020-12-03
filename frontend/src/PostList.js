@@ -1,11 +1,10 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import { getPostsFromAPI } from "./actionCreators";
 
 function PostList() {
   const posts = useSelector(store => store.titles);
-  console.log("WHAT IS THIS", posts);
 
   const dispatch = useDispatch();
 

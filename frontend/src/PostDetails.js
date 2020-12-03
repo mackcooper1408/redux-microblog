@@ -17,7 +17,6 @@ function PostDetails() {
 
   // grabbing state from redux
   const post = useSelector(store => store.posts[postId]);
-  console.log("WHAT AM I", post);
 
   useEffect(() => {
     dispatch(getSinglePostFromApi(postId));
