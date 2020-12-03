@@ -1,6 +1,5 @@
 import React from "react";
 import PostEditForm from "./PostEditForm";
-// import { v4 as uuid } from 'uuid';
 
 function NewPost() {
 

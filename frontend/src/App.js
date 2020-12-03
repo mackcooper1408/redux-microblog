@@ -6,10 +6,6 @@ import Home from './Home';
 import Navbar from './Navbar';
 import PostDetails from './PostDetails';
 
-const initialPosts = [
-  { id: 123, title: "cool stuff", description: "this is cool", body: "WOW WOW WOW, SO COOL!" },
-  { id: 1243, title: "cool stuff", description: "this is cool", body: "honestly... not that cool..." }]
-
 function App() {
   return (
     <div className="App container">
@@ -20,10 +16,10 @@ function App() {
             <NewPost />
           </Route>
           <Route exact path="/">
-            <Home initialPosts={initialPosts}/>
+            <Home />
           </Route>
           <Route exact path="/:postId">
-            <PostDetails posts={initialPosts}/>
+            <PostDetails />
           </Route>
         </Switch>
       </BrowserRouter>

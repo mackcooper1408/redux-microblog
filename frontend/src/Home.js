@@ -3,8 +3,7 @@ import { Link } from "react-router-dom";
 import "./Home.css";
 import PostList from "./PostList";
 
-function Home({ initialPosts }) {
-  const [posts, setPosts] = useState(initialPosts);
+function Home() {
 
   return (
     <div className="container">
@@ -18,9 +17,8 @@ function Home({ initialPosts }) {
       </div>
       <div className="container mt-4">
         <p>Welcome to <b>Microblog</b>, our innovation site for ocmmunicating on the information superhighway.</p>
-        <PostList posts={posts}/>
+        <PostList />
       </div>
-
     </div>
   )
 }

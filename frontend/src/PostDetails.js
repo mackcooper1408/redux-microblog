@@ -1,57 +1,76 @@
 import React, { useState } from "react";
-import { useParams } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import { useHistory, useParams } from "react-router-dom";
 import CommentForm from "./CommentForm";
 import "./PostDetails.css";
 import PostEditForm from "./PostEditForm";
+import { deletePost, addComment, deleteComment } from "./actionCreators";
 
-function PostDetails({ posts }) {
-  const [isEditing, setIsEditing] = useState(false)
+function PostDetails() {
+  // setting react component state
+  const [isEditing, setIsEditing] = useState(false);
+
+  // react router
+  const history = useHistory();
   const { postId } = useParams();
-  const [comments, setComments] = useState(["this sucks...", "other guy sucks i love this"]);
 
-  const post = posts.find(post => post.id === +postId);
+  // grabbing state from redux
+  const post = useSelector(store => store.posts[postId]);
+  const dispatch = useDispatch();
 
-  function deletePost() {
-    posts.filter(post => post.id !== postId);
-    return posts;
+  /** uses singleKey and deletes the post
+   * from the posts object in the store with redux */
+  function handlePostDelete() {
+    dispatch(deletePost(postId));
+    history.push("/");
   }
 
-  function addComment(comment) {
-    setComments([...comments, comment]);
+  /** adds comment to comment list
+   * 
+   * @param comment {string}
+   *    new comment to add for specific post
+   */
+  function handleAddComment(comment) {
+    dispatch(addComment(postId, comment));
   }
-  function deleteComment(evt) {
-    const deletedComment = evt.target.parentNode;
-    console.log(deletedComment);
-    const newComments = comments.filter(c => c !== deletedComment.innerText);
-    setComments(newComments);
+
+  /** grabs the parentNode of the clicked icon
+   * and removes the comment from the comment state. */
+  function handleDeleteComment(evt) {
+    const deletedComment = evt.target.parentNode.innerText;
+    dispatch(deleteComment(postId, deletedComment));
   }
 
   return (
-    <div className="PostDetails col-8">
+    <div className="PostDetails col-8 mt-2">
       {isEditing ?
         <div>
           <h1>{post.title}</h1>
-          <PostEditForm post={post} />
+          <PostEditForm post={post} postId={postId} />
         </div> :
         <div>
           <div className="border border-primary rounded py-2">
             <h1>{post.title}</h1>
             <p><small><i>{post.description}</i></small></p>
             <p>{post.body}</p>
-            <button className="btn btn-primary btn-sm mx-1" onClick={() => setIsEditing(true)}>edit</button>
-            <button className="btn btn-danger btn-sm mx-1" onClick={deletePost}>delete</button>
+            <button
+              className="btn btn-primary btn-sm mx-1"
+              onClick={() => setIsEditing(true)}>edit</button>
+            <button
+              className="btn btn-danger btn-sm mx-1"
+              onClick={handlePostDelete}>delete</button>
           </div>
           <hr />
           <p>Comments:</p>
           <ul className="list-group my-2">
-            {comments.map((c, i) => (
+            {post.comments.map((c, i) => (
               <li className="PostDetails-comment list-group-item" key={i}>
-                <i className="fas fa-trash-alt" onClick={deleteComment}></i>
+                <i className="fas fa-trash-alt" onClick={handleDeleteComment}></i>
                 {c}
               </li>
             ))}
           </ul>
-          <CommentForm addComment={addComment} />
+          <CommentForm addComment={handleAddComment} />
         </div>
       }
     </div>
