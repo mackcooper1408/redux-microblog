@@ -1,4 +1,4 @@
-import { ADD_POST, DELETE_POST, ADD_COMMENT, DELETE_COMMENT, LOAD_POSTS, LOAD_SINGLE_POST } from "./actionTypes"
+import { ADD_POST, DELETE_POST, ADD_COMMENT, DELETE_COMMENT, LOAD_TITLES, LOAD_SINGLE_POST } from "./actionTypes"
 
 const INITIAL_STATE = {
   posts: {},
@@ -7,29 +7,34 @@ const INITIAL_STATE = {
 
 function rootReducer(state = INITIAL_STATE, action) {
   switch (action.type) {
-    case LOAD_POSTS:
+    case LOAD_TITLES:
       return {
         ...state,
         titles: action.posts
       }
+
     case LOAD_SINGLE_POST:
       return{
         ...state,
         posts: {...state.posts, [action.post.id]: action.post}
       }
+
     case ADD_POST:
       return {
         ...state,
         posts: {
           ...state.posts,
           [action.id]: action.postDetails
-        }
+        },
+        titles: [...state.titles, action.postDetails]
       };
 
     case DELETE_POST:
-      const postsListCopy = { ...state.posts }
+      const postsListCopy = { ...state.posts };
       delete postsListCopy[action.id];
-      return { ...state, posts: postsListCopy };
+
+      const newTitles = state.titles.filter(title => title.id !== action.id);
+      return { ...state, posts: postsListCopy, titles: newTitles };
 
     case ADD_COMMENT:
       return {

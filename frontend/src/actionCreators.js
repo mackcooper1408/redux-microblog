@@ -1,4 +1,4 @@
-import { ADD_POST, DELETE_POST, ADD_COMMENT, DELETE_COMMENT, LOAD_POSTS, LOAD_COMMENTS, LOAD_SINGLE_POST } from "./actionTypes";
+import { ADD_POST, DELETE_POST, ADD_COMMENT, DELETE_COMMENT, LOAD_TITLES, LOAD_COMMENTS, LOAD_SINGLE_POST } from "./actionTypes";
 import microBlogApi from "./api";
 
 export function getPostsFromAPI() {
@@ -6,7 +6,7 @@ export function getPostsFromAPI() {
     // dispatch(startLoad());
     try {
       const res = await microBlogApi.getAllPosts();
-      dispatch(gotPosts(res));
+      dispatch(gotTitles(res));
     }
     catch (err) {
       alert(err);
@@ -39,8 +39,8 @@ export function getCommentsFromAPI() {
 }
 /************************************************************** */
 
-function gotPosts(posts){
-  return {type: LOAD_POSTS, posts};
+function gotTitles(posts){
+  return {type: LOAD_TITLES, posts};
 }
 
 function gotAPost(post) {
