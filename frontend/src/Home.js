@@ -16,7 +16,7 @@ function Home() {
         <Link to="/new">Add a new post</Link>
       </div>
       <div className="container mt-4">
-        <p>Welcome to <b>Microblog</b>, our innovation site for ocmmunicating on the information superhighway.</p>
+        <p>Welcome to <b>Microblog</b>, our innovation site for communicating on the information superhighway.</p>
         <PostList />
       </div>
     </div>

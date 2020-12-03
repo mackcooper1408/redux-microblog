@@ -1,10 +1,10 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useHistory, useParams } from "react-router-dom";
 import CommentForm from "./CommentForm";
 import "./PostDetails.css";
 import PostEditForm from "./PostEditForm";
-import { deletePost, addComment, deleteComment } from "./actionCreators";
+import { deletePost, addComment, deleteComment, getSinglePostFromApi } from "./actionCreators";
 
 function PostDetails() {
   // setting react component state
@@ -13,10 +13,15 @@ function PostDetails() {
   // react router
   const history = useHistory();
   const { postId } = useParams();
+  const dispatch = useDispatch();
 
   // grabbing state from redux
   const post = useSelector(store => store.posts[postId]);
-  const dispatch = useDispatch();
+  console.log("WHAT AM I", post);
+
+  useEffect(() => {
+    dispatch(getSinglePostFromApi(postId));
+  }, [dispatch]);
 
   /** uses singleKey and deletes the post
    * from the posts object in the store with redux */
@@ -41,6 +46,8 @@ function PostDetails() {
     dispatch(deleteComment(postId, deletedComment));
   }
 
+  if (!post) return <div>LOADING</div>;
+
   return (
     <div className="PostDetails col-8 mt-2">
       {isEditing ?
@@ -61,7 +68,7 @@ function PostDetails() {
               onClick={handlePostDelete}>delete</button>
           </div>
           <hr />
-          <p>Comments:</p>
+          {/* <p>Comments:</p>
           <ul className="list-group my-2">
             {post.comments.map((c, i) => (
               <li className="PostDetails-comment list-group-item" key={i}>
@@ -70,10 +77,11 @@ function PostDetails() {
               </li>
             ))}
           </ul>
-          <CommentForm addComment={handleAddComment} />
+          <CommentForm addComment={handleAddComment} /> */}
         </div>
       }
     </div>
+    // <div>HELLO</div>
   )
 }
 

@@ -1,26 +1,22 @@
-import { ADD_POST, DELETE_POST, ADD_COMMENT, DELETE_COMMENT } from "./actionTypes"
-
-
+import { ADD_POST, DELETE_POST, ADD_COMMENT, DELETE_COMMENT, LOAD_POSTS, LOAD_SINGLE_POST } from "./actionTypes"
 
 const INITIAL_STATE = {
-  posts: {
-    123: {
-      title: "cool stuff",
-      description: "this is cool",
-      body: "WOW WOW WOW, SO COOL!",
-      comments: ["this sucks...", "other guy sucks i love this"]
-    },
-    1243: {
-      title: "cool stuff 2",
-      description: "this is more cool",
-      body: "honestly... not that cool...",
-      comments: []
-    }
-  }
+  posts: {},
+  titles: []
 };
 
 function rootReducer(state = INITIAL_STATE, action) {
   switch (action.type) {
+    case LOAD_POSTS:
+      return {
+        ...state,
+        titles: action.posts
+      }
+    case LOAD_SINGLE_POST:
+      return{
+        ...state,
+        posts: {...state.posts, [action.post.id]: action.post}
+      }
     case ADD_POST:
       return {
         ...state,

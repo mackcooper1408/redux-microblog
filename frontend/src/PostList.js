@@ -1,21 +1,28 @@
-import React, { useState } from "react";
-import { useSelector } from "react-redux";
+import React, { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
+import { getPostsFromAPI } from "./actionCreators";
 
 function PostList() {
-  const posts = useSelector(store => store.posts);
-  const postKeys = Object.keys(posts);
+  const posts = useSelector(store => store.titles);
+  console.log("WHAT IS THIS", posts);
+
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(getPostsFromAPI());
+  }, [dispatch]);
 
   return (
     <div>
-      {postKeys.map(key => (
-        <div className="col-12 mb-2" key={key}>
+      {posts.map(post => (
+        <div className="col-12 mb-2" key={post.id}>
           <div className="card">
             <div className="card-body">
               <h2 className="card-title text-center">
-                <Link to={`/${key}`}>{posts[key].title}</Link>
+                <Link to={`/${post.id}`}>{post.title}</Link>
               </h2>
-              <p><small><i>{posts[key].description}</i></small></p>
+              <p><small><i>{post.description}</i></small></p>
             </div>
           </div>
         </div>
