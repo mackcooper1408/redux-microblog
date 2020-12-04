@@ -4,10 +4,14 @@ import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 
-import rootReducer from "./rootReducer";
-import { createStore, applyMiddleware, compose } from "redux";
+// import rootReducer from "./rootReducer";
+import { createStore, applyMiddleware, compose, combineReducers } from "redux";
 import { Provider } from "react-redux";
 import thunk from "redux-thunk";
+import postsReducer from './reducers/postsReducer';
+import commentsReducer from './reducers/commentsReducer';
+
+const rootReducer = combineReducers({ posts: postsReducer, comments: commentsReducer });
 
 const store = createStore(
   rootReducer,

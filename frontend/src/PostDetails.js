@@ -17,8 +17,8 @@ function PostDetails() {
   const dispatch = useDispatch();
 
   // grabbing state from redux
-  const post = useSelector(store => store.posts[postId]);
-  const comments = useSelector(store => store.comments[postId]);
+  const post = useSelector(store => store.posts.posts[postId]);
+  const comments = useSelector(store => store.comments.comments[postId]);
 
   useEffect(() => {
     // if (!post || post.id) dispatch(getSinglePostFromApi(postId));

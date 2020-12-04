@@ -4,19 +4,15 @@ import {
   ADD_POST,
   UPDATE_POST,
   DELETE_POST,
-  LOAD_COMMENTS,
-  ADD_COMMENT,
-  DELETE_COMMENT,
   UPDATE_VOTE
-} from "./actionTypes";
+} from "../actionTypes";
 
 const INITIAL_STATE = {
   posts: {},
-  titles: [],
-  comments: {}
+  titles: []
 };
 
-function rootReducer(state = INITIAL_STATE, action) {
+function postsReducer(state = INITIAL_STATE, action) {
   let newTitles;
   switch (action.type) {
     case LOAD_TITLES:
@@ -60,33 +56,6 @@ function rootReducer(state = INITIAL_STATE, action) {
       newTitles = state.titles.filter(title => title.id !== +action.id);
       return { ...state, posts: postsListCopy, titles: newTitles };
 
-    case LOAD_COMMENTS:
-      return {
-        ...state,
-        comments: { ...state.comments, [action.id]: action.comments }
-      };
-
-    case ADD_COMMENT:
-      return {
-        ...state,
-        comments: {
-          ...state.comments,
-          [action.id]: [...state.comments[action.id], action.comment]
-        }
-      };
-
-    case DELETE_COMMENT:
-      const newComments = state.comments[action.postId]
-        .filter(c => c.id !== +action.commentId);
-
-      return {
-        ...state,
-        comments: {
-          ...state.comments,
-          [action.postId]: newComments
-        }
-      };
-
     case UPDATE_VOTE:
       console.log("IM HERE", action.vote);
       newTitles = state.titles
@@ -105,4 +74,4 @@ function rootReducer(state = INITIAL_STATE, action) {
   }
 }
 
-export default rootReducer;
+export default postsReducer;

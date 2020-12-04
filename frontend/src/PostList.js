@@ -6,7 +6,7 @@ import PostVotes from "./PostVotes";
 import "./PostList.css";
 
 function PostList() {
-  const posts = useSelector(store => store.titles);
+  const posts = useSelector(store => store.posts.titles);
   const sortedPosts = posts.sort((a, b) => b.votes - a.votes);
 
   const dispatch = useDispatch();
