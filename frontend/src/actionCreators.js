@@ -7,7 +7,8 @@ import {
   LOAD_COMMENTS,
   LOAD_SINGLE_POST,
   UPDATE_POST,
-  UPDATE_VOTE
+  UPDATE_VOTE,
+  HANDLE_ERROR
 } from "./actionTypes";
 import microBlogApi from "./api";
 
@@ -30,7 +31,7 @@ export function getSinglePostFromApi(postId) {
       const res = await microBlogApi.getPost(postId);
       dispatch(gotAPost(res));
     } catch (err) {
-      alert(err);
+      dispatch(handleError(postId, err));
     }
   }
 }
@@ -76,7 +77,7 @@ export function getCommentsFromAPI(postId) {
       dispatch(gotComments(postId, res));
     }
     catch (err) {
-      alert(err);
+      dispatch(handleError(postId, err));
     }
   }
 }
@@ -87,7 +88,7 @@ export function addCommentWithApi(postId, commentDetails) {
       const res = await microBlogApi.addNewComments(postId, commentDetails);
       dispatch(addComment(postId, res));
     } catch (err) {
-      alert(err);
+      dispatch(handleError(err));
     }
   }
 }
@@ -175,5 +176,13 @@ function updatePostVote(id, vote) {
     type: UPDATE_VOTE,
     id,
     vote
+  }
+}
+
+function handleError(id, msg) {
+  return {
+    type: HANDLE_ERROR,
+    id,
+    msg
   }
 }

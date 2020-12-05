@@ -4,12 +4,14 @@ import {
   ADD_POST,
   UPDATE_POST,
   DELETE_POST,
-  UPDATE_VOTE
+  UPDATE_VOTE,
+  HANDLE_ERROR
 } from "../actionTypes";
 
 const INITIAL_STATE = {
   posts: {},
-  titles: []
+  titles: [],
+  categories: ["stupid", "fun", "adventures", "lazy"]
 };
 
 function postsReducer(state = INITIAL_STATE, action) {
@@ -57,7 +59,6 @@ function postsReducer(state = INITIAL_STATE, action) {
       return { ...state, posts: postsListCopy, titles: newTitles };
 
     case UPDATE_VOTE:
-      console.log("IM HERE", action.vote);
       newTitles = state.titles
         .map(title => title.id === +action.id ? { ...title, votes: action.vote } : title);
       return {
@@ -68,6 +69,15 @@ function postsReducer(state = INITIAL_STATE, action) {
         },
         titles: newTitles
       };
+
+    case HANDLE_ERROR:
+      return {
+        ...state,
+        posts: {
+          ...state.posts,
+          [action.id]: { msg: action.msg }
+        }
+      }
 
     default:
       return state;

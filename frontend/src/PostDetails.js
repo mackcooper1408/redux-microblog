@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { useHistory, useParams } from "react-router-dom";
+import { Redirect, useHistory, useParams } from "react-router-dom";
 import CommentForm from "./CommentForm";
 import "./PostDetails.css";
 import PostEditForm from "./PostEditForm";
-import { getSinglePostFromApi, deletePostWithApi, getCommentsFromAPI, addCommentWithApi, deleteCommentWithApi } from "./actionCreators";
+import { getSinglePostFromApi, deletePostWithApi, getCommentsFromAPI, addCommentWithApi, deleteCommentWithApi, updatePostWithApi } from "./actionCreators";
 import PostVotes from "./PostVotes";
 
 function PostDetails() {
@@ -51,10 +51,15 @@ function PostDetails() {
     dispatch(deleteCommentWithApi(postId, deletedId));
   }
 
+  function handleDeleteCategory() {
+    dispatch(updatePostWithApi(postId, { ...post, category: "" }));
+  }
+
+  if (post && post.hasOwnProperty("msg")) return <Redirect to="/404"/>;
   if (!post || !comments) return <div>LOADING</div>;
 
   return (
-    <div className="PostDetails col-8 mt-2">
+    <div className="PostDetails col-10 mt-2">
       {isEditing ?
         <div>
           <h1>{post.title}</h1>
@@ -73,6 +78,14 @@ function PostDetails() {
               onClick={handlePostDelete}>delete</button>
             <div className="PostDetails-votes card-footer mt-2">
               <PostVotes post={post} />
+            </div>
+            <div className="d-flex flex-row justify-content-between">Category:
+              {post.category &&
+                <div className="PostDetails-category card flex-row justify-content-between align-items-baseline">
+                  {/* <p className="card-text text-center mx-2">{post.category}</p> */}
+                  {post.category}
+                  <i className="fas fa-trash-alt mx-2 text-danger" onClick={handleDeleteCategory}></i>
+                </div>}
             </div>
           </div>
           <hr />

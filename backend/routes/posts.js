@@ -12,6 +12,7 @@ const router = new express.Router();
  *        title,
  *        description,
  *        votes,
+ *        category
  *      },
  *      ...
  *    ]
@@ -24,7 +25,8 @@ router.get("/", async function (req, res, next) {
       `SELECT p.id,
               p.title,
               p.description,
-              p.votes
+              p.votes,
+              p.category
       FROM posts p 
       ORDER BY p.id
       `
@@ -44,7 +46,8 @@ router.get("/", async function (req, res, next) {
  *        description,
  *        body,
  *        votes,
- *        comments: [ { id, text }, ... ],
+ *        categories,
+ *        comments: [ { id, text }, ... ]
  *      }
  */
 
@@ -56,6 +59,7 @@ router.get("/:id", async function (req, res, next) {
               p.description,
               p.body,
               p.votes,
+              p.category,
               CASE WHEN COUNT(c.id) = 0 THEN JSON '[]' ELSE JSON_AGG(
                     JSON_BUILD_OBJECT('id', c.id, 'text', c.text)
                 ) END AS comments
@@ -92,6 +96,25 @@ router.post("/:id/vote/:direction", async function (req, res, next) {
   }
 });
 
+// /** POST /[id]/categories
+//  *
+//  * => { categories: [categories] }
+//  *
+//  */
+
+// router.post("/:id/categories", async function (req, res, next) {
+//   try {
+//     const newCategory = req.body.newCategory;
+//     const result = await db.query(
+//       "UPDATE posts SET categories=array_append(categories, $1) WHERE id = $2 RETURNING categories",
+//       // SET integer_array = array_append(integer_array, 5);
+//       [newCategory, req.params.id]);
+//     return res.json(result.rows[0]);
+//   } catch (err) {
+//     return next(err);
+//   }
+// });
+
 
 /** POST /     add a new post
  *
@@ -122,12 +145,12 @@ router.post("/", async function (req, res, next) {
 
 router.put("/:id", async function (req, res, next) {
   try {
-    const {title, body, description} = req.body;
+    const {title, body, description, category} = req.body;
     const result = await db.query(
-      `UPDATE posts SET title=$1, description=$2, body=$3
-        WHERE id = $4 
-        RETURNING id, title, description, body, votes`,
-      [title, description, body, req.params.id]);
+      `UPDATE posts SET title=$1, description=$2, body=$3, category=$4
+        WHERE id = $5 
+        RETURNING id, title, description, body, votes, category`,
+      [title, description, body, category, req.params.id]);
     return res.json(result.rows[0]);
   } catch (e) {
     return next(e);

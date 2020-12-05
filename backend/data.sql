@@ -8,7 +8,8 @@ CREATE TABLE posts (id SERIAL PRIMARY KEY,
                     title TEXT NOT NULL, 
                     description TEXT NOT NULL,
                     body TEXT, 
-                    votes INT NOT NULL DEFAULT 0);
+                    votes INT NOT NULL DEFAULT 0,
+                    category TEXT);
                     
 CREATE TABLE comments (id SERIAL PRIMARY KEY, 
                        text TEXT NOT NULL, 

@@ -5,6 +5,8 @@ import NewPost from './NewPost';
 import Home from './Home';
 import Navbar from './Navbar';
 import PostDetails from './PostDetails';
+import CategoryList from './CategoryList';
+import NotFound from './NotFound';
 
 function App() {
   return (
@@ -18,8 +20,17 @@ function App() {
           <Route exact path="/">
             <Home />
           </Route>
+          <Route exact path="/404">
+            <NotFound />
+          </Route>
           <Route exact path="/:postId">
             <PostDetails />
+          </Route>
+          <Route exact path="/posts/:category">
+            <CategoryList />
+          </Route>
+          <Route >
+            <NotFound />
           </Route>
         </Switch>
       </BrowserRouter>

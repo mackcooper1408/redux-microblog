@@ -12,3 +12,16 @@
     flex-direction: row;
     justify-content: center;
 }
+
+.PostDetails-category {
+    padding: 0 10%;
+    display: flex;
+    align-items: baseline;
+    justify-content: center;
+    /* border: 1px solid black; */
+    /* border-radius: 3px; */
+}
+
+.fa-trash-alt {
+    cursor: pointer;
+}

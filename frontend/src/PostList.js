@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { Link } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import { getPostsFromAPI } from "./actionCreators";
 import PostVotes from "./PostVotes";
 import "./PostList.css";
@@ -10,7 +10,11 @@ import PostListPagination from "./PostListPagination";
 function PostList() {
   const ITEMS_PER_PAGE = 3;
 
-  const posts = useSelector(store => store.posts.titles);
+  const { category } = useParams();
+
+  const posts = useSelector(store => {
+    return store.posts.titles.filter(title => category ? title.category === category : true)
+  });
   const sortedPosts = posts.sort((a, b) => b.votes - a.votes);
   const [sliceValues, setSliceValues] = useState({ start: 0, end: ITEMS_PER_PAGE });
   const slicedPosts = sortedPosts.slice(sliceValues.start, sliceValues.end);
@@ -29,6 +33,8 @@ function PostList() {
     setSliceValues({ start, end });
   }
 
+  if (!slicedPosts || slicedPosts.length === 0) return <h5>Sorry, No Posts... =(</h5>;
+
   return (
     <div>
       {slicedPosts.map(post => (
@@ -39,17 +45,27 @@ function PostList() {
                 <Link to={`/${post.id}`}>{post.title}</Link>
               </h2>
               <p><small><i>{post.description}</i></small></p>
-              <div className="PostList-votes card-footer">
-                <PostVotes post={post} />
+              <div className="card-footer d-flex flex-row justify-content-between">
+                <div className="PostList-votes">
+                  <PostVotes post={post} />
+                </div>
+                {post.category &&
+                  <div className="d-flex justify-content-end">
+                    Category:
+                  <div className="card mx-2 px-2">
+                      <p className="card-text">{post.category}</p>
+                    </div>
+                  </div>}
               </div>
             </div>
           </div>
         </div>
       ))}
-      <PostListPagination
-        listLength={sortedPosts.length}
-        slicePosts={slicePosts}
-        itemsPerPage={ITEMS_PER_PAGE}/>
+      {sortedPosts.length > ITEMS_PER_PAGE &&
+        <PostListPagination
+          listLength={sortedPosts.length}
+          slicePosts={slicePosts}
+          itemsPerPage={ITEMS_PER_PAGE} />}
     </div>
   )
 }
