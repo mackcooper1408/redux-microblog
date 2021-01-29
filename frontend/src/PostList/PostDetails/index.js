@@ -38,7 +38,7 @@ function PostDetails() {
     // if (!post || post.id) dispatch(getSinglePostFromApi(postId));
     dispatch(getSinglePostFromApi(postId));
     if (!comments) dispatch(getCommentsFromAPI(postId));
-  }, [dispatch]);
+  }, [dispatch, comments, postId]);
 
   /** uses singleKey and deletes the post
    * from the posts object in the store with redux */
