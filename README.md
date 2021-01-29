@@ -6,6 +6,8 @@ This is a simple micro blog for creating posts and voting or commenting on them.
 
 This repository contains two separate applications: `frontend`, which is a Create React App (deployed with Netlify), and `backend`, a Node API (deployed on Heroku).
 
+[Live Demo](https://boring-khorana-ae7d3b.netlify.app/)
+
 # Getting Started on the Server
 
 1. clone the repository
