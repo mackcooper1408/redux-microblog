@@ -1,20 +1,9 @@
 .Navbar {
     width: 100vw;
 }
-.Navbar-left {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-}
 
 small {
     font-size: 0.6rem;
-}
-
-.Navbar-list {
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
 }
 
 li {
