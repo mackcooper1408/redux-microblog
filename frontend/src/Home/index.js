@@ -1,7 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import "./Home.css";
-import PostList from "./PostList";
+import PostList from "../PostList";
 
 function Home() {
 

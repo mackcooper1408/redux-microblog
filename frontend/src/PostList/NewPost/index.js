@@ -1,5 +1,5 @@
 import React from "react";
-import PostEditForm from "../PostEditForm/PostEditForm";
+import PostEditForm from "../PostEditForm";
 
 function NewPost() {
   return (

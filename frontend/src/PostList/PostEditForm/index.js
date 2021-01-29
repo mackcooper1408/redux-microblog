@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useHistory } from "react-router-dom";
-import { addPostWithApi, updatePostWithApi } from "./actionCreators";
+import { addPostWithApi, updatePostWithApi } from "../../actions/actionCreators";
 import { v4 as uuid } from 'uuid';
 
 function PostEditForm({ post, postId }) {

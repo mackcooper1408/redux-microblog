@@ -1,6 +1,6 @@
 import React from "react";
 import { useDispatch } from "react-redux";
-import { updateVoteWithApi } from "./actionCreators";
+import { updateVoteWithApi } from "../../actions/actionCreators";
 import "./PostVotes.css";
 
 function PostVotes({ post }) {
