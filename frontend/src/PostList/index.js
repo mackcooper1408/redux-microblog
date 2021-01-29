@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useCallback, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, useParams } from "react-router-dom";
 import { getPostsFromAPI } from "../actions/actionCreators";
@@ -7,11 +7,19 @@ import "./PostList.css";
 import { useState } from "react";
 import PostListPagination from "./PostListPagination";
 
+/**
+ * Display list of posts.
+ *
+ * - shows only set amount of posts per page
+ * - sorts by most "liked" posts
+ * - if there's a category in params, shows only those posts
+ */
 function PostList() {
   const ITEMS_PER_PAGE = 3;
 
   const { category } = useParams();
 
+  // if there is a category in params, show only posts with that category
   const posts = useSelector((store) => {
     return store.posts.titles.filter((title) =>
       category ? title.category === category : true
@@ -31,11 +39,11 @@ function PostList() {
   // the store to keep it updated and no longer need to keep making api calls.
   useEffect(() => {
     if (posts.length === 0) dispatch(getPostsFromAPI());
-  }, [dispatch]);
+  }, [dispatch, posts]);
 
-  function slicePosts(start, end) {
+  const slicePosts = useCallback((start, end) => {
     setSliceValues({ start, end });
-  }
+  }, []);
 
   if (!slicedPosts || slicedPosts.length === 0)
     return <h5>Sorry, No Posts... =(</h5>;

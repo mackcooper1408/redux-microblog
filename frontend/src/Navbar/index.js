@@ -3,6 +3,10 @@ import { Link } from "react-router-dom";
 import { Nav, Navbar, NavDropdown } from "react-bootstrap";
 import "./Navbar.css";
 
+/**
+ * Displays navbar
+ * Shows toggle on smaller screens
+ */
 function microNavbar() {
   return (
     <Navbar
@@ -14,7 +18,7 @@ function microNavbar() {
     >
       <Navbar.Toggle aria-controls="basic-navbar-nav" />
       <Navbar.Brand as={Link} className="navbar-brand" to="/">
-        <p>MicroBlog</p>
+        <p className="mb-0">MicroBlog</p>
         <small>Blog of the Future</small>
       </Navbar.Brand>
       <Navbar.Collapse id="basic-navbar-nav" animation="false">

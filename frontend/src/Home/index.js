@@ -3,6 +3,9 @@ import { Link } from "react-router-dom";
 import "./Home.css";
 import PostList from "../PostList";
 
+/**
+ * Displays basic home page
+ */
 function Home() {
   return (
     <div className="container">

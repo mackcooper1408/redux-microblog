@@ -1,7 +1,16 @@
 import React, { useEffect, useState } from "react";
 import { Pagination } from "react-bootstrap";
 
-
+/**
+ * Post List Pagination
+ *
+ * - Displays pages at bottom of page for pagination of posts.
+ * - Handles slicing posts with given list length and items per page.
+ * @param {Number} listLength length of current post list
+ * @param {Function} slicePosts slices current post list
+ * @param {Number} itemsPerPage items to be shown per page.
+ *    - used to determine slice size
+ */
 function PostListPagination({ listLength, slicePosts, itemsPerPage }) {
   const [active, setActive] = useState(1);
   const [pages, setpages] = useState([]);
@@ -24,10 +33,8 @@ function PostListPagination({ listLength, slicePosts, itemsPerPage }) {
     const start = (active - 1) * itemsPerPage;
     const end = start + itemsPerPage;
     slicePosts(start, end);
-  },
-  [active, listLength]
-  );
-  
+  }, [active, listLength, itemsPerPage, slicePosts]);
+
   function handleClick(value) {
     setActive(value);
   }

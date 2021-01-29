@@ -14,6 +14,13 @@ import {
 } from "../../actions/actionCreators";
 import PostVotes from "../PostVotes";
 
+/**
+ * Display details about a post
+ *
+ * - allows for adding / deleting comments
+ * - allows for adding / deleting categories
+ * - allows for editing / deleting post
+ */
 function PostDetails() {
   // setting react component state
   const [isEditing, setIsEditing] = useState(false);
@@ -101,7 +108,6 @@ function PostDetails() {
               Category:
               {post.category && (
                 <div className="PostDetails-category card flex-row justify-content-between align-items-baseline">
-                  {/* <p className="card-text text-center mx-2">{post.category}</p> */}
                   {post.category}
                   <i
                     className="fas fa-trash-alt mx-2 text-danger"
