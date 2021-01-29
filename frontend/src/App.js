@@ -1,12 +1,11 @@
-// import logo from './logo.svg';
-import './App.css';
+import "./App.css";
 import { BrowserRouter, Route, Switch } from "react-router-dom";
-import NewPost from './NewPost';
-import Home from './Home';
-import Navbar from './Navbar';
-import PostDetails from './PostDetails';
-import CategoryList from './CategoryList';
-import NotFound from './NotFound';
+import NewPost from "./PostList/NewPost";
+import PostDetails from "./PostList/PostDetails";
+import NotFound from "./NotFound";
+import Home from "./Home";
+import Navbar from "./Navbar";
+import CategoryList from "./CategoryList";
 
 function App() {
   return (
@@ -29,7 +28,7 @@ function App() {
           <Route exact path="/posts/:category">
             <CategoryList />
           </Route>
-          <Route >
+          <Route>
             <NotFound />
           </Route>
         </Switch>

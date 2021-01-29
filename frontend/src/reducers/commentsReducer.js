@@ -2,7 +2,7 @@ import {
   LOAD_COMMENTS,
   ADD_COMMENT,
   DELETE_COMMENT
-} from "../actionTypes";
+} from "../actions/actionTypes";
 
 const INITIAL_STATE = {
   comments: {}

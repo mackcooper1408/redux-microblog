@@ -1,0 +1,16 @@
+.Home-link {
+  padding: 5px;
+  display: inline;
+  border: 1px solid gray;
+  border-radius: 3px;
+  text-decoration: none;
+  background-color: rgb(244, 244, 244);
+}
+
+.Home-link:hover {
+    background-color: white;
+}
+
+a:hover {
+  text-decoration: none;
+}

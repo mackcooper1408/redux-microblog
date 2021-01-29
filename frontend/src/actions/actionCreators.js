@@ -8,9 +8,9 @@ import {
   LOAD_SINGLE_POST,
   UPDATE_POST,
   UPDATE_VOTE,
-  HANDLE_ERROR
+  HANDLE_ERROR,
 } from "./actionTypes";
-import microBlogApi from "./api";
+import microBlogApi from "../api";
 
 export function getPostsFromAPI() {
   return async function (dispatch) {
@@ -18,11 +18,10 @@ export function getPostsFromAPI() {
     try {
       const res = await microBlogApi.getAllPosts();
       dispatch(gotTitles(res));
-    }
-    catch (err) {
+    } catch (err) {
       alert(err);
     }
-  }
+  };
 }
 
 export function getSinglePostFromApi(postId) {
@@ -33,7 +32,7 @@ export function getSinglePostFromApi(postId) {
     } catch (err) {
       dispatch(handleError(postId, err));
     }
-  }
+  };
 }
 
 export function addPostWithApi(postId, postDetails) {
@@ -44,7 +43,7 @@ export function addPostWithApi(postId, postDetails) {
     } catch (err) {
       alert(err);
     }
-  }
+  };
 }
 
 export function updatePostWithApi(postId, postDetails) {
@@ -55,7 +54,7 @@ export function updatePostWithApi(postId, postDetails) {
     } catch (err) {
       alert(err);
     }
-  }
+  };
 }
 
 export function deletePostWithApi(postId) {
@@ -66,7 +65,7 @@ export function deletePostWithApi(postId) {
     } catch (err) {
       alert(err);
     }
-  }
+  };
 }
 
 export function getCommentsFromAPI(postId) {
@@ -75,11 +74,10 @@ export function getCommentsFromAPI(postId) {
     try {
       const res = await microBlogApi.getAllComments(postId);
       dispatch(gotComments(postId, res));
-    }
-    catch (err) {
+    } catch (err) {
       dispatch(handleError(postId, err));
     }
-  }
+  };
 }
 
 export function addCommentWithApi(postId, commentDetails) {
@@ -90,7 +88,7 @@ export function addCommentWithApi(postId, commentDetails) {
     } catch (err) {
       dispatch(handleError(err));
     }
-  }
+  };
 }
 export function deleteCommentWithApi(postId, commentId) {
   return async function (dispatch) {
@@ -100,7 +98,7 @@ export function deleteCommentWithApi(postId, commentId) {
     } catch (err) {
       alert(err);
     }
-  }
+  };
 }
 
 export function updateVoteWithApi(postId, vote) {
@@ -111,7 +109,7 @@ export function updateVoteWithApi(postId, vote) {
     } catch (err) {
       alert(err);
     }
-  }
+  };
 }
 
 /************************************************************** */
@@ -121,32 +119,31 @@ function gotTitles(posts) {
 }
 
 function gotAPost(post) {
-  return { type: LOAD_SINGLE_POST, post }
+  return { type: LOAD_SINGLE_POST, post };
 }
 
 function addPost(id, postDetails) {
   return {
     type: ADD_POST,
     id,
-    postDetails
-  }
+    postDetails,
+  };
 }
 
 function updatePost(id, postDetails) {
   return {
     type: UPDATE_POST,
     id,
-    postDetails
-  }
+    postDetails,
+  };
 }
 
 function deletePost(id) {
   return {
     type: DELETE_POST,
-    id
-  }
+    id,
+  };
 }
-
 
 /************************************************************** */
 
@@ -154,35 +151,34 @@ function gotComments(id, comments) {
   return { type: LOAD_COMMENTS, id, comments };
 }
 
-
 function addComment(id, comment) {
   return {
     type: ADD_COMMENT,
     id,
-    comment
-  }
+    comment,
+  };
 }
 
 function deleteComment(postId, commentId) {
   return {
     type: DELETE_COMMENT,
     postId,
-    commentId
-  }
+    commentId,
+  };
 }
 
 function updatePostVote(id, vote) {
   return {
     type: UPDATE_VOTE,
     id,
-    vote
-  }
+    vote,
+  };
 }
 
 function handleError(id, msg) {
   return {
     type: HANDLE_ERROR,
     id,
-    msg
-  }
+    msg,
+  };
 }

@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Redirect, useHistory, useParams } from "react-router-dom";
-import CommentForm from "./CommentForm";
+import CommentForm from "../../CommentForm";
 import "./PostDetails.css";
-import PostEditForm from "./PostEditForm";
+import PostEditForm from "../PostEditForm";
 import {
   getSinglePostFromApi,
   deletePostWithApi,
@@ -11,9 +11,16 @@ import {
   addCommentWithApi,
   deleteCommentWithApi,
   updatePostWithApi,
-} from "./actionCreators";
-import PostVotes from "./PostVotes";
+} from "../../actions/actionCreators";
+import PostVotes from "../PostVotes";
 
+/**
+ * Display details about a post
+ *
+ * - allows for adding / deleting comments
+ * - allows for adding / deleting categories
+ * - allows for editing / deleting post
+ */
 function PostDetails() {
   // setting react component state
   const [isEditing, setIsEditing] = useState(false);
@@ -101,7 +108,6 @@ function PostDetails() {
               Category:
               {post.category && (
                 <div className="PostDetails-category card flex-row justify-content-between align-items-baseline">
-                  {/* <p className="card-text text-center mx-2">{post.category}</p> */}
                   {post.category}
                   <i
                     className="fas fa-trash-alt mx-2 text-danger"

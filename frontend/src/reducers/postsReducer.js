@@ -6,7 +6,7 @@ import {
   DELETE_POST,
   UPDATE_VOTE,
   HANDLE_ERROR
-} from "../actionTypes";
+} from "../actions/actionTypes";
 
 const INITIAL_STATE = {
   posts: {},
