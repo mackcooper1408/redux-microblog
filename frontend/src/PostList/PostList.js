@@ -2,10 +2,10 @@ import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, useParams } from "react-router-dom";
 import { getPostsFromAPI } from "./actionCreators";
-import PostVotes from "./PostVotes";
+import PostVotes from "./PostVotes/PostVotes";
 import "./PostList.css";
 import { useState } from "react";
-import PostListPagination from "./PostListPagination";
+import PostListPagination from "./PostListPagination/PostListPagination";
 
 function PostList() {
   const ITEMS_PER_PAGE = 3;

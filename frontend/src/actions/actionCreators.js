@@ -10,7 +10,7 @@ import {
   UPDATE_VOTE,
   HANDLE_ERROR
 } from "./actionTypes";
-import microBlogApi from "./api";
+import microBlogApi from "../api";
 
 export function getPostsFromAPI() {
   return async function (dispatch) {

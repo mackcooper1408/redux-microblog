@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Redirect, useHistory, useParams } from "react-router-dom";
-import CommentForm from "./CommentForm";
+import CommentForm from "../../CommentForm/CommentForm";
 import "./PostDetails.css";
-import PostEditForm from "./PostEditForm";
+import PostEditForm from "../PostEditForm/PostEditForm";
 import {
   getSinglePostFromApi,
   deletePostWithApi,
@@ -12,7 +12,7 @@ import {
   deleteCommentWithApi,
   updatePostWithApi,
 } from "./actionCreators";
-import PostVotes from "./PostVotes";
+import PostVotes from "../PostVotes/PostVotes";
 
 function PostDetails() {
   // setting react component state
