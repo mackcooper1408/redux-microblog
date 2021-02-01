@@ -28,20 +28,20 @@ function microNavbar() {
             title="Categories"
             id="basic-nav-dropdown"
           >
-            <NavDropdown.Item href="/posts/stupid">
+            <NavDropdown.Item as={Link} to="/posts/stupid">
               Stupid Blog Posts
             </NavDropdown.Item>
-            <NavDropdown.Item href="/posts/fun">
+            <NavDropdown.Item as={Link} to="/posts/fun">
               Fun Blog Posts
             </NavDropdown.Item>
-            <NavDropdown.Item href="/posts/adventures">
+            <NavDropdown.Item as={Link} to="/posts/adventures">
               Adventures Blog Posts
             </NavDropdown.Item>
-            <NavDropdown.Item href="/posts/lazy">
+            <NavDropdown.Item as={Link} to="/posts/lazy">
               Lazy Blog Posts
             </NavDropdown.Item>
           </NavDropdown>
-          <Nav.Link as={Link} className="mx-1" href="" to="/new">
+          <Nav.Link as={Link} className="mx-1" to="/new">
             New Post
           </Nav.Link>
         </Nav>
