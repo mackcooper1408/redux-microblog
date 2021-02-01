@@ -39,7 +39,7 @@ function PostList() {
   // the store to keep it updated and no longer need to keep making api calls.
   useEffect(() => {
     if (posts.length === 0) dispatch(getPostsFromAPI());
-  }, [dispatch, posts]);
+  }, [dispatch, posts.length]);
 
   const slicePosts = useCallback((start, end) => {
     setSliceValues({ start, end });
