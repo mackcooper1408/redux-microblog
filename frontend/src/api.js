@@ -1,6 +1,8 @@
 import axios from "axios";
 
-const BASE_URL = process.env.REACT_APP_BASE_URL || "http://localhost:5000/api";
+const BASE_URL = process.env.NODE_ENV === "production"
+  ? process.env.REACT_APP_BASE_URL
+  : "http://localhost:5000/api";
 
 /**
  * Class for making API calls to backend
@@ -8,6 +10,7 @@ const BASE_URL = process.env.REACT_APP_BASE_URL || "http://localhost:5000/api";
 class microBlogApi {
   // GET get minimal details on all posts
   static async getAllPosts() {
+    console.log(process.env.NODE_ENV);
     const result = await axios.get(`${BASE_URL}/posts`);
     console.debug(`API GET ${BASE_URL}/posts`);
 
