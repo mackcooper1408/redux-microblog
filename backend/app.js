@@ -18,7 +18,7 @@ app.use("/api/posts", postsRoutes);
 
 /** 404 handler: matches unmatched routes; raises NotFoundError. */
 app.use(function (req, res, next) {
-  return next(new NotFoundError());
+  return next({ message: 'Route Not Found', status: 404 });
 });
 
 /** Error handler: logs stacktrace and returns JSON error message. */
